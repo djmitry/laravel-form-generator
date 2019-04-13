@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
 
-class WidgetCommand extends Command
+class FormGeneratorCommand extends Command
 {
     /**
      * The name and signature of the console command.
