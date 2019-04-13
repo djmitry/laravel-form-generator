@@ -1,0 +1,25 @@
+{
+    "name": "djmitry/laravel-form-generator",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Dmitry Zagainov",
+            "email": "d.i.ma.92@mail.ru"
+        }
+    ],
+    "minimum-stability": "stable",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Djmitry\\Generator\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Djmitry\\Generator\\FormGeneratorServiceProvider"
+            ]
+        }
+    }
+}
