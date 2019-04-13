@@ -1,6 +1,6 @@
 <?php
 
-namespace Djmitry\Widgets;
+namespace Djmitry\Generator;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;

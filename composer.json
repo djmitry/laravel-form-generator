@@ -9,9 +9,6 @@
         }
     ],
     "minimum-stability": "stable",
-    "require": {
-        "djmitry/laravel-form-generator": "dev-master"
-    },
     "autoload": {
         "psr-4": {
             "Djmitry\\Generator\\": "src"
