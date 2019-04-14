@@ -9,6 +9,10 @@
         }
     ],
     "minimum-stability": "stable",
+    "require": {
+        "doctrine/dbal": "^2.9",
+        "laravelcollective/html": "^5.8"
+    },
     "autoload": {
         "psr-4": {
             "Djmitry\\Generator\\": "src"
