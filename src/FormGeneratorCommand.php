@@ -22,7 +22,7 @@ class FormGeneratorCommand extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Генерация формы на основе таблицы базы данных';
 
     /**
      * Create a new command instance.
@@ -41,13 +41,10 @@ class FormGeneratorCommand extends Command
      */
     public function handle()
     {
-        //$this->info('Display this on the screen');
         $arguments = $this->arguments();
         $options = $this->options();
-        //print_r($arguments);
-        //print_r($options);
         $schema = Schema::getColumnListing($this->option('table'));
-        print_r($schema);
+        //print_r($schema);
 
         $content = "@extends('back.layouts.app')\n@section('content')\n";
         $content .= "{!! Form::open(['method' => 'post', 'route' => 'home']) !!}\n";
@@ -55,29 +52,34 @@ class FormGeneratorCommand extends Command
         foreach ($schema as $key => $name) {
             $type = DB::getSchemaBuilder()->getColumnType($this->option('table'), $name);
             $this->info($type);
-            $group = '';
-
-            if ($type === 'string') {
-                $group .= "\t\t{!! Form::label('$name', '$name', ['class' => 'label-control']) !!}\n";
-                $group .= "\t\t{!! Form::text('$name', null, ['class' => 'form-control']) !!}\n";
-            } else if ($type === 'text') {
-                $group .= "\t\t{!! Form::label('$name', '$name', ['class' => 'label-control']) !!}\n";
-                $group .= "\t\t{!! Form::textarea('$name', null, ['class' => 'form-control']) !!}\n";
-            } else if ($type === 'boolean') {
-                $group .= "\t\t{!! Form::label('$name', '$name', ['class' => 'label-control']) !!}\n";
-                $group .= "\t\t{!! Form::checkbox('$name', 1, null, ['class' => 'checkbox']) !!}\n";
-            } else if ($type === 'datetime') {
-                $group .= "\t\t{!! Form::label('$name', '$name', ['class' => 'label-control']) !!}\n";
-                $group .= "\t\t{!! Form::date('$name', 'Y-m-d H:i:s', ['class' => 'form-control']) !!}\n";
+            
+            if ($name === 'id') {
+                continue;
             }
 
-            if ($group) {
-                $group = "\t<div class='form-group'>\n" . $group . "\t</div>\n";
+            $group = null;
+            $field = null;
+            $label = "\t\t{!! Form::label('$name', '$name', ['class' => 'label-control']) !!}\n";
+
+            if ($type === 'string') {
+                $field = "\t\t{!! Form::text('$name', null, ['class' => 'form-control']) !!}\n";
+            } else if ($type === 'text') {
+                $field = "\t\t{!! Form::textarea('$name', null, ['class' => 'form-control']) !!}\n";
+            } else if ($type === 'boolean') {     
+                $field = "\t\t{!! Form::checkbox('$name', 1, null, ['class' => 'checkbox']) !!}\n";
+            } else if ($type === 'datetime') {
+                $field = "\t\t{!! Form::date('$name', 'Y-m-d H:i:s', ['class' => 'form-control']) !!}\n";
+            }
+
+            if ($field) {
+                $group = "\t<div class='form-group'>\n" . $label . $field . "\t</div>\n";
                 $content .= $group;
             }
         }
 
-        $content .= "\t<div class='form-group'>\n{!! Form::submit('Отправить', ['class' => 'btn btn-success']) !!}\t</div>\n";
+        $btn = "\t\t{!! Form::submit('Отправить', ['class' => 'btn btn-success']) !!}\n";
+        $btnGroup = "\t<div class='form-group'>\n" . $btn . "\t</div>\n";
+        $content .= $btnGroup;
         $content .= "{!! Form::close() !!}\n@endsection";
         
         Storage::disk('views')->put($this->argument('name') . '.blade.php', $content);

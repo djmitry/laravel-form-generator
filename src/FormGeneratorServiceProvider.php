@@ -11,7 +11,7 @@ class FormGeneratorServiceProvider extends ServiceProvider
     public function boot()
     {
         /**
-         * Регистрируем консольные комманды
+         * Консольные комманды
          */
         if ($this->app->runningInConsole()) {
             $this->commands([
@@ -22,8 +22,6 @@ class FormGeneratorServiceProvider extends ServiceProvider
  
     public function register()
     {
-        /*App::singleton('widget', function(){
-            return new \Djmitry\Widgets\Widget();
-        });*/
+
     }
 }
