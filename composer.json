@@ -1,5 +1,6 @@
 {
     "name": "djmitry/laravel-form-generator",
+    "description": "Генерация формы на основе таблицы базы данных для фреймворка Laravel",
     "type": "library",
     "license": "MIT",
     "authors": [
